@@ -456,10 +456,10 @@ class SqueezeAnalyzer:
         elif rate >= FUNDING_HIGH:
             f_score = 40 + (rate - FUNDING_HIGH) / (FUNDING_EXTREME_HIGH - FUNDING_HIGH) * 40
         elif rate <= FUNDING_EXTREME_LOW:
-            # Longs sobrecarregados → LONG SQUEEZE iminente
-            f_score = max(-100, (rate / FUNDING_EXTREME_LOW) * 80)
+            # Longs sobrecarregados → LONG SQUEEZE iminente (score negativo)
+            f_score = max(-100, -(abs(rate) / abs(FUNDING_EXTREME_LOW)) * 80)
         elif rate <= FUNDING_LOW:
-            f_score = -40 + (rate - FUNDING_LOW) / (FUNDING_EXTREME_LOW - FUNDING_LOW) * 40
+            f_score = -40 - (abs(rate) - abs(FUNDING_LOW)) / (abs(FUNDING_EXTREME_LOW) - abs(FUNDING_LOW)) * 40
         else:
             f_score = rate / FUNDING_HIGH * 40  # zona neutra proporcional
 
@@ -599,7 +599,7 @@ class SqueezeAnalyzer:
     def _classify_signal(self, score: float) -> dict:
         """Classifica o sinal de squeeze com base no score."""
         abs_score = abs(score)
-        direction = "SHORT_SQUEEZE" if score > 0 else "LONG_SQUEEZE" if score < 0 else "NEUTRAL"
+        direction = "SHORT_SQUEEZE" if score >= 20 else "LONG_SQUEEZE" if score <= -20 else "NEUTRAL"
 
         if abs_score >= 60:
             level    = "🔴 SQUEEZE ATIVO"
@@ -842,7 +842,7 @@ def _interpret_liq(long_liq: float, short_liq: float, total: float) -> str:
 def _interpret_basis(basis_pct: float) -> str:
     if basis_pct > 0.3:
         return f"CONTANGO FORTE (+{basis_pct:.4f}%) — Futuros com prêmio sobre spot. Longs estressados pagando carry."
-    elif basis_pct > 0.1:
+    elif basis_pct >= 0.05:
         return f"Contango leve (+{basis_pct:.4f}%) — Normal em mercado de alta."
     elif basis_pct < -0.3:
         return f"BACKWARDATION FORTE ({basis_pct:.4f}%) — Futuros com desconto. Shorts estressados, demanda spot alta."
