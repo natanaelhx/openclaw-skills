@@ -500,8 +500,10 @@ class PoolAnalyzer:
 
         mask = (safe["apy"] >= apy_min) & (safe["apy"] <= apy_max)
         # IL filter: il7d <= 5 or null/zero
-        il_col = safe.get("il7d", pd.Series([0]*len(safe)))
-        il_mask = (safe["il7d"].fillna(0) <= 5)
+        if "il7d" in safe.columns:
+            il_mask = (safe["il7d"].fillna(0) <= 5)
+        else:
+            il_mask = pd.Series([True] * len(safe), index=safe.index)
         filtered = safe[mask & il_mask].copy()
         if filtered.empty:
             return pd.DataFrame()
