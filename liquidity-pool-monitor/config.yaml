@@ -1,0 +1,43 @@
+chains:
+  - Ethereum
+  - Arbitrum
+  - Base
+  - Optimism
+  - Polygon
+
+filters:
+  min_tvl:  500000
+  min_apr:  3.0
+  max_apr:  80.0
+
+output:
+  format: both         # terminal | file | both
+  report_dir: ~/liquidity_monitor/reports
+  data_dir:   ~/liquidity_monitor/data
+
+# Protocolos permitidos (vazio = todos)
+protocols_whitelist: []
+
+# Tokens considerados seguros para cálculo de risco
+safe_tokens:
+  - USDC
+  - USDT
+  - DAI
+  - WBTC
+  - WETH
+  - ETH
+  - cbBTC
+  - cbETH
+  - stETH
+  - rETH
+  - LUSD
+  - USDC.e
+  - USDT.e
+
+# Protocolos auditados considerados confiáveis
+trusted_protocols:
+  - uniswap-v3
+  - curve
+  - balancer
+  - aerodrome
+  - velodrome

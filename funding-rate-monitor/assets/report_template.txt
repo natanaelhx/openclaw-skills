@@ -1,0 +1,138 @@
+╔══════════════════════════════════════════════════════╗
+║         FUNDING RATE MONITOR — Unified Skill         ║
+║  Mode: full       Exchange: binance    Symbols: 2    ║
+╚══════════════════════════════════════════════════════╝
+
+[LIVE] Fetching current funding rates...
+  BTCUSDT: +0.0100% (next in 3h 22min)
+  ETHUSDT: +0.0080% (next in 3h 22min)
+
+[LIVE] Fetching top funding rates...
+
+=================================================================
+  LIVE FUNDING RATES
+=================================================================
+  Symbol           Rate %   Status                Next Funding
+  -------------------------------------------------------------
+  BTCUSDT          +0.0100%  MODERATE              in 3h 22min
+  ETHUSDT          +0.0080%  MODERATE              in 3h 22min
+=================================================================
+
+  TOP FUNDING RATES
+  ---------------------------------------------
+  Rank   Symbol              Rate %
+  ---------------------------------------------
+  [TOP POSITIVE — Longs paying Shorts]
+  1      XRPUSDT           +0.1250%
+  2      SOLUSDT           +0.1100%
+  3      DOGEUSDT          +0.0950%
+  4      BTCUSDT           +0.0100%
+  5      ETHUSDT           +0.0080%
+  [TOP NEGATIVE — Shorts paying Longs]
+  1      CFXUSDT           -0.0450%
+  2      LPTUSDT           -0.0390%
+  3      BLURUSDT          -0.0310%
+  4      MAGICUSDT         -0.0295%
+  5      PERPUSDT          -0.0280%
+  ---------------------------------------------
+
+[BACKTEST] Starting...
+
+  Symbol: BTCUSDT
+  Fetching funding history (500 records)...
+  500 records (2023-12-01 -> 2024-03-26)
+  Saved: C:\Users\Latrel\funding_backtest\data\btcusdt_funding_history.csv
+  Fetching 8h klines...
+  500 candles loaded
+  Using ABSOLUTE thresholds:
+    SHORT when rate > +0.0800%
+    LONG  when rate < -0.0300%
+  Running backtest...
+
+=======================================================
+  BACKTEST RESULTS — Funding Rate Extreme Reversal
+  Capital: $10,000 | Leverage: 1x
+=======================================================
+  Days tested:           114 days
+  Threshold mode:        ABSOLUTE
+  SHORT when rate >      +0.0800%
+  LONG  when rate <      -0.0300%
+
+  PERFORMANCE
+  Total trades:          45
+    -> LONG:             12
+    -> SHORT:            33
+  Win rate:              62.2%
+  Profit factor:         1.85
+  Total return:          +18.45%
+  Annualized return:     +59.12%
+  Max drawdown:          6.23%
+  Sharpe ratio:          2.14
+  Final equity:          $11,845.00
+
+  EXTREMES
+  Best trade:            +3.00%
+  Worst trade:           -2.00%
+
+  EXIT REASON DISTRIBUTION
+    END          2 trades
+    NORMALIZE    18 trades
+    SL           17 trades
+    TP           8 trades
+=======================================================
+
+[TEST] Running automated test suite...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TEST 1 — API Connectivity
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ PASS  Binance API responds (BTC)  (status 200)
+  ✅ PASS  Field 'symbol' present  (BTCUSDT)
+  ✅ PASS  Field 'lastFundingRate' present  (0.00010000)
+  ✅ PASS  Field 'nextFundingTime' present
+  ✅ PASS  Funding rate is valid number (not NaN)  (0.0100%)
+  ✅ PASS  Binance API responds (ETH)  (status 200)
+  ✅ PASS  ETH funding rate valid  (0.0080%)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TEST 2 — CSV Data Quality
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ PASS  BTC CSV exists  (btc_funding_history.csv)
+  ✅ PASS  BTC has >= 100 rows  (500 rows)
+  ✅ PASS  BTC timestamps in chronological order
+  ✅ PASS  BTC no gaps > 9h  (max gap: 8.0h)
+  ✅ PASS  BTC rates in range (-2% to +2%)  (all OK)
+  ✅ PASS  ETH CSV exists  (eth_funding_history.csv)
+  ✅ PASS  ETH has >= 100 rows  (500 rows)
+  ✅ PASS  ETH timestamps in chronological order
+  ✅ PASS  ETH no gaps > 9h  (max gap: 8.0h)
+  ✅ PASS  ETH rates in range (-2% to +2%)  (all OK)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TEST 3 — Backtest Logic
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ PASS  Equity curve CSV exists  (501 points)
+  ✅ PASS  Equity always > 0  (min: $9,312.45)
+  ✅ PASS  Backtest report exists
+  ✅ PASS  Number of trades > 10  (45 trades)
+  ✅ PASS  Sharpe ratio valid (not Inf/NaN)  (2.14)
+  ✅ PASS  Drawdown between 0% and 100%  (6.23%)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TEST 4 — Signal Classification
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ PASS  funding +0.10% -> SHORT  (expected=SHORT got=SHORT)
+  ✅ PASS  funding +0.08% = threshold -> FLAT  (expected=FLAT got=FLAT)
+  ✅ PASS  funding +0.09% -> SHORT  (expected=SHORT got=SHORT)
+  ✅ PASS  funding -0.05% -> LONG  (expected=LONG got=LONG)
+  ✅ PASS  funding -0.03% = threshold -> FLAT  (expected=FLAT got=FLAT)
+  ✅ PASS  funding -0.04% -> LONG  (expected=LONG got=LONG)
+  ✅ PASS  funding 0.00% -> FLAT  (expected=FLAT got=FLAT)
+  ✅ PASS  funding +0.05% -> FLAT  (expected=FLAT got=FLAT)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FINAL RESULT: 29/29 tests passed
+  All tests passed!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Done.

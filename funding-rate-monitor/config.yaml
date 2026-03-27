@@ -1,0 +1,38 @@
+update_frequency_minutes: 60
+
+platform_pairs:
+  binance:
+    - BTCUSDT
+    - ETHUSDT
+    - SOLUSDT
+    - BNBUSDT
+  bybit:
+    - BTCUSDT
+    - ETHUSDT
+    - SOLUSDT
+  okx:
+    - BTC-USDT-SWAP
+    - ETH-USDT-SWAP
+
+notify_on_change: true
+
+thresholds:
+  BTCUSDT:
+    funding_rate_min: -0.03
+    funding_rate_max:  0.08
+  ETHUSDT:
+    funding_rate_min: -0.03
+    funding_rate_max:  0.08
+  SOLUSDT:
+    funding_rate_min: -0.05
+    funding_rate_max:  0.10
+
+# Alertas gerais (usados quando o par não está em thresholds)
+default_thresholds:
+  funding_rate_min: -0.03
+  funding_rate_max:  0.08
+
+output:
+  format: both         # terminal | file | both
+  report_dir: ~/funding_backtest/reports
+  data_dir:   ~/funding_backtest/data
