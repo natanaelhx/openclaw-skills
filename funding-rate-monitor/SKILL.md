@@ -1,19 +1,17 @@
 ---
 name: funding-rate-monitor
 version: 1.0.0
-description: Monitors crypto perpetual futures funding rates, runs backtests of the "Extreme Reversal" strategy, and validates data quality via automated tests.
+description: >
+  Monitora taxas de funding de futuros perpétuos (Binance, Bybit, OKX), executa
+  backtests da estratégia "Extreme Reversal" e valida qualidade de dados.
+  Use quando o usuário perguntar sobre: funding rate, taxa de funding, funding fee,
+  longs/shorts pagando, mercado sobrecomprado em futuros, funding BTC/ETH/SOL.
 author: Latrel
 created: 2026-03-26
-python: ">=3.8"
-dependencies:
-  - requests
-  - pandas
-  - numpy
-  - tabulate
-platforms:
-  - win32
-  - linux
-  - darwin
+compatibility:
+  python: ">=3.8"
+  pip: [requests, pandas, numpy, tabulate]
+  network: required
 ---
 
 # Funding Rate Monitor Skill

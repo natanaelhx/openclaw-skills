@@ -1,5 +1,6 @@
 ---
 name: liquidity-pool-monitor
+version: 1.0.0
 description: >
   Monitora pools de liquidez DeFi em múltiplas chains (Ethereum, Arbitrum, Base,
   Optimism, Polygon). Busca dados de DefiLlama, Uniswap V3, Aerodrome e CoinGecko.
@@ -7,6 +8,8 @@ description: >
   Use quando o usuário perguntar sobre: pools de liquidez, LP, yield farming,
   APR de pools, pools seguras, impermanent loss, Uniswap, Aerodrome, Curve,
   melhores pools DeFi, onde fornecer liquidez, farming de taxa.
+author: Latrel
+created: 2026-03-26
 compatibility:
   python: ">=3.8"
   pip: [requests, pandas, numpy, tabulate]
